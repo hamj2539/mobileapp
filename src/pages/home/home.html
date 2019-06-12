@@ -1,0 +1,47 @@
+ <ion-header>
+  <ion-navbar color = "primary">
+      <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>BigCat</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="bg">
+  <div *ngIf="isLoading" class="bot-loading-container">
+    <ion-spinner name="dots"></ion-spinner>
+  </div>
+
+  <div *ngFor="let message of messages" class="message-wrapper">
+    <div>
+      <!-- <img class="profile-pic" [ngClass]="{'left':message.from==='BigCat', 'right':message.from==='User'}"
+        src="https://api.adorable.io/avatars/10/{{message.from}}" /> -->
+      <!--  wave-->
+      <div class="chat-bubble"
+        [ngClass]="{'left':message.from==='Bigcat', 'right':message.from==='User', 'slide-left': message.from==='BigCat', 'slide-right':message.from==='User'}">
+
+        <div class="message" [innerHTML]="message.text" autolinker>
+        </div>
+
+        <div class="message-detail">
+          <!-- <span class="bold">{{message.from}}</span> -->
+          <span>{{message.created | date:'dd/MM hh:MM'}}</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cf"></div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <form [formGroup]="messageForm" (submit)="sendMessage(chatBox)" novalidate>
+    <ion-item>
+      <ion-input formControlName="message" [(ngModel)]="chatBox" placeholder="Send a message..."></ion-input>
+      <button ion-button clear (click)="sendMessage(chatBox)" item-end>
+        <ion-icon class="footer-btn" name="send"></ion-icon>
+      </button>
+    </ion-item>
+  </form>
+</ion-footer>
